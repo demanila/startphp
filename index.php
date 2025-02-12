@@ -2,6 +2,7 @@
 echo "Hello World!";
 
 echo '<hr />';
+/*
 function sayHello()
 {
     echo '"Привет!"';
@@ -31,22 +32,31 @@ echo '<hr />';
 $twice_2 = fn($t_2) => $t_2 * 2;
 echo $twice_2(7);
 echo '<hr />';
+*/
 
+$z = [24, 43, [247, 14, 67], 18, [97, 144, [56, [12, 48], 813], 678]];
 
-$arr_n = [
-    'Номер' => [1, 2, 3, 4, 5],
-    'Цвет' => ['Красный', 'Оранжевый', 'Желтый', 'Зеленый', 'Голубой']
-];
-function XZ_function($value, $key) {
-    echo "$key = $value";
+function recur($value, $key)
+{
+    echo "Индексу $key соответствует значение $value" . '<br>';
 }
-array_walk_recursive($arr_n, 'XZ_function');
 
-echo '<pre>';
-print_r($arr_n);
-echo '</pre>';
+array_walk_recursive($z, 'recur');
 echo '<hr />';
 
+function recurs($z)
+{
+    foreach ($z as $k => $v)
+        if (is_array($v)) {
+            recurs($v);
+        } else {
+            echo "$k  =  $v" . '<br>';
+        }
+}
+
+recurs($z);
+
+/*
 function plusOne($p) {
     return $p + 1;
 }
@@ -114,4 +124,156 @@ echo '<hr />';
 echo date('l') . '<br>';
 echo date('y/m/d/') . '<br>';
 echo date('d-m-y h:i:s') . '<br>';
+echo '<hr />';
+*/
 
+// Функция array_map
+
+function plusTen($z)
+{
+    return ($z + 10);
+}
+
+$a = [78, 13, 0.82, 7, 16, 45, 183, 91];
+$b = array_map('plusTen', $a);
+
+echo '<pre>';
+print_r($b);
+echo '</ pre>';
+echo '<hr />';
+
+
+$c = [78, 13, 0.82, 7, 16, 45, 183, 91];
+$d = array_map(function ($y) {
+    return $y + 10;
+}, $c);
+echo '<pre>';
+print_r($d);
+echo '</ pre>';
+echo '<hr />';
+
+// Функция array_filter
+
+$e = [77, 13, 2, 7, 16, 45, 184, 91];
+function even($x)
+{
+    if ($x % 2 == 0)
+        return $x;
+}
+
+$f = array_filter($e, 'even');
+echo '<pre>';
+print_r($f);
+echo '</ pre>';
+echo '<hr />';
+$k = [7, 13, 2, 7, 16, 45, 184, 91];
+$l = array_filter($k, function ($q) {
+    if ($q % 2 != 0)
+        return $q;
+});
+echo '<pre>';
+print_r($l);
+echo '</ pre>';
+echo '<hr />';
+
+// Функция array_chunk
+
+$j = [7, 13, 2, 7, 16, 45, 184, 91];
+print_r(array_chunk($j, 2));
+print_r(array_chunk($j, 3));
+print_r(array_chunk($j, 3, true));
+echo '<hr />';
+
+// Функция in_array
+
+$s = [7, 13, 2, 7, 16, 45, 184, 91];
+if (in_array(23, $s)) {
+    echo "Есть тут 23!";
+} else {
+    echo "Нет тут такого числа";
+}
+echo '<hr />';
+
+$student = [
+    [
+        'name' => 'Yasha 1',
+        'surname' => 'Ivanov',
+        'email' => 'yasha@yasha.ru',
+        'phone' => '+7(999)999-99-99',
+        'age' => 23,
+    ],
+    [
+        'name' => 'Yasha 2',
+        'surname' => 'Petrov',
+        'email' => 'yasha@yasha.ru',
+        'age' => 21,
+    ],
+    [
+        'name' => 'Yasha 3',
+        'surname' => 'Sidorov',
+        'email' => 'yasha@yasha.ru',
+        'age' => 26,
+    ]
+];
+
+function stud($student)
+{
+    foreach ($student as $k => $v)
+        if (is_array($v)) {
+            stud($v);
+        } else {
+            echo "$k : $v" . '<br>';
+        }
+}
+
+stud($student);
+echo '<hr />';
+
+array_multisort(array_column($student, 'age'), SORT_ASC, $student);
+foreach ($student as $i) {
+    print_r($student);
+}
+echo '<hr />';
+
+function sor($d, $g)
+{
+    return ($d['age'] < $g['age']);
+}
+
+uasort($student, 'sor');
+print_r($student);
+echo '<hr />';
+
+$n = ['Красный', 'Оранжевый', 'Желтый', 'Зеленый'];
+echo (implode(" , ", $n)) . '<br>';
+var_dump(implode(" ; ", $n));
+echo '<hr />';
+
+$rainbow = 'красный оранжевый желтый зеленый голубой синий фиолетовый';
+$colors = explode(" ", $rainbow);
+print_r($colors);
+echo "Цвет №3 $colors[2]";
+echo '<hr />';
+
+$rc = json_encode($colors, JSON_UNESCAPED_UNICODE);
+echo $rc . '<br>';
+
+print_r(json_decode($rc));
+echo '<hr />';
+
+$u = [77, 13, 2, 7, 16, 45, 184, 91];
+
+$n = count($u);
+for ($i = 1; $i <= $n - 1; $i++) {
+    for ($j = 0; $j <= $n - 1 - $i; $j++) {
+        if ($u[$j] > $u[$j + 1]) {
+            $w = $u[$j];
+            $u[$j] = $u[$j + 1];
+            $u[$j + 1] = $w;
+        }
+    }
+}
+
+echo '<pre>';
+print_r($u);
+echo '</pre>';
