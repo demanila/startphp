@@ -1,8 +1,8 @@
 <?php
-echo "Hello World!";
+/*echo "Hello World!";
 
 echo '<hr />';
-/*
+
 function sayHello()
 {
     echo '"Привет!"';
@@ -32,7 +32,7 @@ echo '<hr />';
 $twice_2 = fn($t_2) => $t_2 * 2;
 echo $twice_2(7);
 echo '<hr />';
-*/
+
 
 $z = [24, 43, [247, 14, 67], 18, [97, 144, [56, [12, 48], 813], 678]];
 
@@ -56,7 +56,7 @@ function recurs($z)
 
 recurs($z);
 
-/*
+
 function plusOne($p) {
     return $p + 1;
 }
@@ -125,7 +125,7 @@ echo date('l') . '<br>';
 echo date('y/m/d/') . '<br>';
 echo date('d-m-y h:i:s') . '<br>';
 echo '<hr />';
-*/
+
 
 // Функция array_map
 
@@ -276,5 +276,19 @@ for ($i = 1; $i <= $n - 1; $i++) {
 
 echo '<pre>';
 print_r($u);
-echo '</pre>';
+//echo '</pre>';
 
+*/
+?>
+<form action="/auth/registration.php" method="POST" enctype="multipart/form-data">
+    <p><input required type="email" name="login" placeholder="Логин"></p>
+    <p><input required type="password" name="password" placeholder="Пароль"></p>
+    <p><input type="file" name="avatar"></p>
+    <p><input type="submit" value="Регистрация"></p>
+</form>
+
+<form action="/auth/authorization.php" method="POST" enctype="multipart/form-data">
+    <p><input required type="email" name="login" placeholder="Логин"></p>
+    <p><input required type="password" name="password" placeholder="Пароль"></p>
+    <p><input type="submit" value="Войти"></p>
+</form>
