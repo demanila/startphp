@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (isset($_SESSION['user'])) {
+    header("Location: /lk.php");
+    exit();
+}
+
 header('Content-Type: application/json; charset=utf-8');
 $result = false;
 $error = [];
@@ -6,7 +12,7 @@ $error = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["login"])) {
         $error[] = [
-            'message' => 'Нет логина'
+            "message" => 'Нет логина'
         ];
     }
     if (!isset($_POST["password"])) {
@@ -14,13 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'message' => 'Нет пароля'
         ];
     }
-
     if (empty($error)) {
         $login = htmlspecialchars($_POST["login"]);
         $password = htmlspecialchars($_POST["password"]);
-        $salt = 'littleOfSalt';
-        $saltyPassword = $password . $salt;
-        $hashedPassword = password_hash($saltyPassword, PASSWORD_BCRYPT);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $status = 'manager';
         $filePath = 'users/' . $login . '.json';
         if (file_exists($filePath)) {
             $error[] = [
@@ -30,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $userData = [
                 'login' => $login,
                 'password' => $hashedPassword,
+                'status' => $status,
             ];
             if (file_put_contents($filePath, json_encode($userData, JSON_PRETTY_PRINT))) {
                 $result = true;
@@ -40,10 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-
 }
+
 echo json_encode([
     'result' => $result,
     'error' => $error
 ]);
+
 ?>
+
+
