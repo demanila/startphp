@@ -1,8 +1,8 @@
 <?php
-
+require_once "auth/users/User.php";
 session_start();
 
-if (!isset($_SESSION['user'])) {
+if (!\users\User::isLoggedIn()) {
     header("Location: /auth/authorization.php");
     exit();
 }
